@@ -1,11 +1,10 @@
 import mongoose from 'mongoose'
 
-const { Schema } = mongoose;
-
 const HotelSchema = new mongoose.Schema({
     name:{
         type:String,
-        required:"true"
+        required:"true",
+        unique:"true"
     },
     type:{
         type:String,
@@ -57,4 +56,5 @@ const HotelSchema = new mongoose.Schema({
 
 });
 
-export default mongoose.model("Hotel", HotelSchema);
+const hotelModel = mongoose.model("hotel", HotelSchema);
+export default hotelModel;
