@@ -13,7 +13,10 @@ export const postHotel = async(req,res)=>{
 export const updateHotel = async(req,res)=>{
     try{
        const updateHotel = await hotelModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
+       if(updateHotel)
        res.status(200).json(updateHotel);
+       else
+       res.send("no hotel found")
     }catch(err){
         res.status(500).json(err.message)
     }

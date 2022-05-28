@@ -22,7 +22,6 @@ export const createUser = async(req, res)=>{
 export const getUsers= async(req, res)=>{
     try{
         const users = await userModel.find();
-        console.log(users)
         res.status(200).json(users);
   
     }catch(err){
@@ -36,11 +35,10 @@ export const login = async(req, res)=>{
         if(!user) res.status(404).json("User not found")
         const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
         if(!isPasswordCorrect) res.status(400).json("Wrong password or username")
-    
+
         const token = jwt.sign({ id:user._id , isAdmin:user.isAdmin },process.env.JWT)
-
-
         const {password,...otherDetails} = user
+
         res.cookie("isLogin", token, {httpOnly:true}).status(200).json(otherDetails._doc)
     }catch(err){
         res.status(500).json(err.message)
